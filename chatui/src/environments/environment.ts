@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  api: 'hhtp://localhost:'
+  relay: 'ws://localhost:3000'
 };
 
 /*
