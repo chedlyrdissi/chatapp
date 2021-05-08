@@ -1,0 +1,22 @@
+<p>chatfield works!</p>
+
+<div class="msg msg-bubble msg-recieved" *ngFor="let message of this.getMessages()">
+	<span class="msg msg-source">{{(message.source || '')}}</span>
+	<span [ngClass]="{'fas fa-broadcast-tower': message.broadcast}"></span>
+	<span>></span>
+	<span [ngSwitch]="message.messageType">
+		<span *ngSwitchCase="'text'">{{message.messageValue}}</span>
+		<span *ngSwitchDefault>unknown format</span>
+	</span>
+</div>
+
+<form (submit)="sendMsg(messageholder.value, broadcast.checked);chatform.resetForm()" #chatform="ngForm">
+	<div>
+		<input type="checkbox" id="b_checkbox" name="broadcast" #broadcast/>
+		<label for="b_checkbox">broadcast</label>
+	</div>
+	<div class="msg msg-send-text-block">
+		<input class="msg msg-bubble msg-send-text" type="text" name="message" [(ngModel)]="message" #messageholder>
+		<button class="msg msg-send-btn">></button>
+	</div>
+</form>

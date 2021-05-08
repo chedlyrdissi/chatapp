@@ -1,0 +1,35 @@
+.msg {
+	border-radius: 10px;	
+}
+
+.msg-send-btn {
+	background: transparent;
+    border: 1px solid;
+}
+
+.msg-send-text {
+	flex: auto;
+    border: 1px solid;
+
+}
+
+.msg-send-text-block {
+	display: flex;
+}
+
+.msg-source {
+	color: #24478f;
+}
+
+.msg-recieved {
+	/*background: #0077b3;*/
+	background: #cc99ff;
+	color: black;
+	width: fit-content;
+}
+
+.msg-bubble {
+	padding: 3px;
+	margin: 2px;
+	border-radius: 10px;
+}

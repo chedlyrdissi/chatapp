@@ -2,37 +2,38 @@
 import asyncio
 import websockets
 import json
+from models import ChatMessage
+from auth import register, unregister
 
 
 users = set()
 
-def register(user):
-	users.add(user)
-
-def unregister(user):
-	users.remove(user)
 
 async def broadcast(message):
+	message.broadcast = True
 	for user in users:
-		await user.send(message)
+		await user.send(message.to_json())
 
 async def hello(websocket, path):
 	print(f"+ user logged in {path}.")
-	register(websocket)
+	register(websocket, users)
 	try:
 		while True:
-			msg = json.loads(await websocket.recv())
+			msg = ChatMessage(**json.loads(await websocket.recv()))
 			print(f"< {msg} ")
 
-			if 'broadcast' in msg and msg['broadcast']:
-				await broadcast(json.dumps({'type': 'text', 'message': f"broadcasted {msg['message']}"}))
-
-			await websocket.send(json.dumps({'type': 'text', 'message': f"received {msg['message']}"}))
+			resp = ChatMessage(source='server', messageType=msg.messageType, messageValue=msg.messageValue)
+			if msg.broadcast:
+				await broadcast(resp)
+			else:
+				await websocket.send(resp.to_json())
 	
 	except websockets.exceptions.ConnectionClosedOK:
-		unregister(websocket)
+		unregister(websocket, users)
 		print(f"x user logged out.")
 
+
+print("Starting server.")
 start_server = websockets.serve(hello, "localhost", 3000)
 
 asyncio.get_event_loop().run_until_complete(start_server)

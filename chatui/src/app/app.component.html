@@ -1,16 +1,2 @@
 <h1>Chat app UI</h1>
-<form (submit)="sendMsg()">
-	<div>
-		<label for="name">Message to send</label>
-		<input type="text" name="name" [(ngModel)]="msgtosend"/>
-	</div>
-	<div>
-		<label>Message received: </label>
-		<ol>
-			<li *ngFor="let message of msgreceived">{{message}}</li>
-		</ol>
-	</div>
-	<button (click)="sendMsg()">Send Message</button>
-	<button (click)="sendMsg(true)">broadcast</button>
-</form>
 <router-outlet></router-outlet>
