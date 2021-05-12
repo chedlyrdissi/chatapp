@@ -3,33 +3,33 @@ import asyncio
 import websockets
 import json
 from models import ChatMessage
-from auth import register, unregister
+from auth import register, unregister, getroom
 
 
-users = set()
+rooms = []
 
 
-async def broadcast(message):
+async def broadcast(message, room):
 	message.broadcast = True
-	for user in users:
+	for user in room.users:
 		await user.send(message.to_json())
 
 async def hello(websocket, path):
 	print(f"+ user logged in {path}.")
-	register(websocket, users)
+	register(websocket, path[1:], rooms)
 	try:
 		while True:
 			msg = ChatMessage(**json.loads(await websocket.recv()))
-			print(f"< {msg} ")
+			# print(f"< {msg} ")
 
 			resp = ChatMessage(source='server', messageType=msg.messageType, messageValue=msg.messageValue)
 			if msg.broadcast:
-				await broadcast(resp)
+				await broadcast(resp, getroom(path[1:], rooms))
 			else:
 				await websocket.send(resp.to_json())
 	
 	except websockets.exceptions.ConnectionClosedOK:
-		unregister(websocket, users)
+		unregister(websocket, path[1:], rooms)
 		print(f"x user logged out.")
 
 

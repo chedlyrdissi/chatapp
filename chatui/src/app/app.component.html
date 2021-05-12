@@ -1,2 +1,10 @@
 <h1>Chat app UI</h1>
-<router-outlet></router-outlet>
+
+<ul>
+	<li *ngFor="let room of rooms; let i=index">{{room}} <button class="btn btn-danger" (click)="removeRoom(room)">x</button></li>
+</ul>
+
+<input type="text" name="newroom" #newroom/>
+<button class="btn btn-success" (click)="addRoom(newroom.value)">+</button>
+
+<app-chatfield *ngFor="let room of rooms; let i=index" [roomid]="room"></app-chatfield>

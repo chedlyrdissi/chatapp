@@ -1,8 +1,10 @@
-<p>chatfield works!</p>
+<h1>Room {{roomid}}</h1>
 
 <div class="msg msg-bubble msg-recieved" *ngFor="let message of this.getMessages()">
 	<span class="msg msg-source">{{(message.source || '')}}</span>
-	<span [ngClass]="{'fas fa-broadcast-tower': message.broadcast}"></span>
+
+	<fa-icon class="broadcast" [icon]="broadcasticon" *ngIf="message.broadcast"></fa-icon>
+
 	<span>></span>
 	<span [ngSwitch]="message.messageType">
 		<span *ngSwitchCase="'text'">{{message.messageValue}}</span>

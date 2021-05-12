@@ -19,8 +19,8 @@ export interface Message {
 export class ChatService {
   public messages: Subject<ChatMessage>;
 
-  constructor(ws: WebsocketService) {
-    this.messages = <Subject<ChatMessage>> ws.connect(CHAT_URL).pipe(map(
+  constructor(ws: WebsocketService, roomid: string) {
+    this.messages = <Subject<ChatMessage>> ws.connect(`${CHAT_URL}/${roomid}`).pipe(map(
       (response: MessageEvent): ChatMessage => {
         let data = JSON.parse(response.data);
         return {

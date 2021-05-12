@@ -1,53 +1,30 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+
 import { WebsocketService } from "../chatservice/websocket.service";
 import { ChatService } from "../chatservice/chatservice.service";
 import { ChatMessage } from '../models';
+import { faBroadcastTower } from '@fortawesome/free-solid-svg-icons';
 
 
 @Component({
   selector: 'app-chatfield',
   templateUrl: './chatfield.component.html',
-  styleUrls: ['./chatfield.component.css'],
-  providers: [WebsocketService, ChatService]
+  styleUrls: ['./chatfield.component.css']
 })
 export class ChatfieldComponent {
 
-	private cons = [			{
-				source: "chedli",
-				messageType: "text",
-				messageValue: "text1"
-			},
-			{
-				source: "chedli2",
-				messageType: "text",
-				messageValue: "text2"
-			},
-			{
-				source: "chedli",
-				messageType: "text",
-				messageValue: "text3"
-			},
-			{
-				source: "chedli2",
-				messageType: "text",
-				messageValue: "text4"
-			},
-			{
-				source: "chedli",
-				messageType: "text",
-				messageValue: "text5"
-			},
-			{
-				source: "chedli",
-				messageType: "text",
-				messageValue: "text6"
-			}];
+	public broadcasticon = faBroadcastTower;
 
 	private messages: ChatMessage[];
 	public message: string;
 
-  constructor(private chatService: ChatService) {
+	private chatService: ChatService;
 
+	@Input() roomid: string;
+
+  constructor() {
+  	this.chatService = new ChatService(new WebsocketService(), this.roomid || '')
   	this.chatService.messages.subscribe(msg => {
   		console.log(msg);
       	this.messages.push(msg);

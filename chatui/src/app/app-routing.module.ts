@@ -4,11 +4,12 @@ import { ChatfieldComponent } from './chatfield/chatfield.component';
 
 
 const routes: Routes = [
-	{path: '', component: ChatfieldComponent}
+	// {path: '', component: ChatfieldComponent},
+	{path: '**', redirectTo: ''}
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

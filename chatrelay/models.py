@@ -31,3 +31,15 @@ def injectoncondition(condition, key, value, isstring=True, cm={'c': False}):
 			cm="," if cm else "")
 
 	return ""
+
+
+class ChatRoom:
+
+	def __init__(self, roomid):
+		self.id = roomid
+		self.users = []
+
+	def __eq__(self, other):
+		if not isinstance(other, ChatRoom):
+			return False
+		return self.id == other.id

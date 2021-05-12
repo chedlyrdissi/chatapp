@@ -1,3 +1,15 @@
 div {
 	margin-top: 15px;
 }
+
+.btn {
+	
+}
+
+.btn-success {
+	background: green;
+}
+
+.btn-danger {
+	background: red;
+}
