@@ -22,7 +22,7 @@ async def hello(websocket, path):
 			msg = ChatMessage(**json.loads(await websocket.recv()))
 			# print(f"< {msg} ")
 
-			resp = ChatMessage(source='server', messageType=msg.messageType, messageValue=msg.messageValue)
+			resp = ChatMessage(source=msg.source or '', messageType=msg.messageType, messageValue=msg.messageValue)
 			if msg.broadcast:
 				await broadcast(resp, getroom(path[1:], rooms))
 			else:

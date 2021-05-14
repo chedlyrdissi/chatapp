@@ -15,9 +15,10 @@ export class AppComponent {
 
   addRoom(roomid) {
   	this.rooms.push(roomid);
+    return false;
   }
 
   removeRoom(roomid) {
   	this.rooms.splice(this.rooms.indexOf(roomid), 1);
-  }  
+  } 
 }

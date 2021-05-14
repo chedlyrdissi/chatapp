@@ -1,15 +1,60 @@
+:host {
+	--main-danger-color: transparent;
+	--main-success-color: transparent;
+	--focus--color: #24478f;
+	--radius: 15px;
+
+	/*--main-danger-color: #ff4d94;
+	--main-success-color: #00e6ac;*/
+}
+
+.room-bar > ul {
+	list-style-type: none;
+}
+
 div {
 	margin-top: 15px;
 }
 
 .btn {
-	
+	border: 1px;
+    border-radius: 5px;
 }
 
 .btn-success {
-	background: green;
+	background: var(--main-success-color);
+}
+
+.btn-success:hover {
+	/*background: transparent;*/
+	opacity: 0.5;
+	border: 1px solid var(--main-success-color);
 }
 
 .btn-danger {
-	background: red;
+	background: var(--main-danger-color);
+}
+
+
+.btn-danger:hover {
+	/*background: ;*/
+	opacity: 0.5;
+	border: 1px solid var(--main-danger-color);
+}
+
+.room-bar {
+	float: left;
+}
+
+.room-field {
+	border: 1px solid;
+    border-radius: var(--radius);
+}
+
+.room-field:focus-visible {
+	outline: none;
+}
+
+app-chatfield {
+	display: table-row;
 }

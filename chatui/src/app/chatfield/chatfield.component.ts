@@ -18,6 +18,7 @@ export class ChatfieldComponent {
 
 	private messages: ChatMessage[];
 	public message: string;
+  public source: string;
 
 	private chatService: ChatService;
 
@@ -37,9 +38,10 @@ export class ChatfieldComponent {
  		return this.messages.slice(0);
  	}
 
- 	public sendMsg(message: string, broadcast: boolean=false) {
+ 	public sendMsg(uname:string, message: string, broadcast: boolean=false) {
  		this.chatService.messages.next({
-			messageType: 'text',
+			source: uname,
+      messageType: 'text',
 			messageValue: message,
 			broadcast: broadcast
     });

@@ -1,10 +1,18 @@
 <h1>Chat app UI</h1>
 
-<ul>
-	<li *ngFor="let room of rooms; let i=index">{{room}} <button class="btn btn-danger" (click)="removeRoom(room)">x</button></li>
-</ul>
+<div class="room-bar">
+	<ul>
+		<li *ngFor="let room of rooms; let i=index">Room : {{room}} <button class="btn btn-danger" (click)="removeRoom(room)">x</button></li>
+	</ul>
 
-<input type="text" name="newroom" #newroom/>
-<button class="btn btn-success" (click)="addRoom(newroom.value)">+</button>
+	<div>
+		<form (submit)="addRoom(newroom.value)">
+			<input class="room-field" type="text" name="newroom" #newroom/>
+			<button class="btn btn-success">+</button>	
+		</form>
+	</div>
+</div>
 
-<app-chatfield *ngFor="let room of rooms; let i=index" [roomid]="room"></app-chatfield>
+<div class="chat-fields">	
+	<app-chatfield stype="display: table-cell;" *ngFor="let room of rooms; let i=index" [roomid]="room"></app-chatfield>
+</div>

@@ -1,3 +1,23 @@
+:host {
+	--sender--color: #24478f;
+}
+
+.broadcast-label {
+	writing-mode: vertical-lr;
+}
+
+.broadcast-checkbox {
+    margin-top: 5px;
+}
+
+.uname-field {
+	max-width: min-content;
+}
+
+.room-id {
+	color: var(--sender--color);
+}
+
 .msg {
 	border-radius: 10px;	
 }
@@ -18,12 +38,10 @@
 }
 
 .msg-source {
-	color: #24478f;
+	color: var(--sender--color);
 }
 
 .msg-recieved {
-	/*background: #0077b3;*/
-	background: #cc99ff;
 	color: black;
 	width: fit-content;
 }
@@ -34,7 +52,16 @@
 	border-radius: 10px;
 }
 
+.msg-bubble:focus-visible {
+	outline: none;
+}
+
 .broadcast {
 	padding: 2px;
 	font-size: 0.7rem;
+	color: cadetblue;
+}
+
+.chat-container {
+	width: 100%;
 }

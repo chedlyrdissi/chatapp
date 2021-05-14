@@ -1,24 +1,25 @@
-<h1>Room {{roomid}}</h1>
+<div class="chat-container">
+	<h1>Room id: <span class="room-id">{{roomid}}</span></h1>
+		<div class="msg msg-bubble msg-recieved" *ngFor="let message of this.getMessages()">
+			<span class="msg msg-source">{{(message.source || '')}}</span>
 
-<div class="msg msg-bubble msg-recieved" *ngFor="let message of this.getMessages()">
-	<span class="msg msg-source">{{(message.source || '')}}</span>
+			<fa-icon class="broadcast" [icon]="broadcasticon" *ngIf="message.broadcast"></fa-icon>
 
-	<fa-icon class="broadcast" [icon]="broadcasticon" *ngIf="message.broadcast"></fa-icon>
+			<span>></span>
+			<span [ngSwitch]="message.messageType">
+				<span *ngSwitchCase="'text'">{{message.messageValue}}</span>
+				<span *ngSwitchDefault>unknown format</span>
+			</span>
+		</div>
 
-	<span>></span>
-	<span [ngSwitch]="message.messageType">
-		<span *ngSwitchCase="'text'">{{message.messageValue}}</span>
-		<span *ngSwitchDefault>unknown format</span>
-	</span>
+		<form (submit)="sendMsg(sourceholder.value, messageholder.value, broadcast.checked);chatform.resetForm()" #chatform="ngForm">
+			<div class="msg msg-send-text-block">
+				<input class="msg msg-bubble msg-send-text uname-field form-control" type="text" name="source" [(ngModel)]="source" minlength="1" placeholder="username" #sourceholder/>
+				<span class="broadcast-checkbox">></span>
+				<input class="msg msg-bubble msg-send-text form-control" type="text" name="message" [(ngModel)]="message" minlength="1" #messageholder required/>
+				<input type="checkbox" id="b_checkbox" name="broadcast" class="broadcast-checkbox" #broadcast/>
+				<label for="b_checkbox" class="broadcast-label broadcast-checkbox"><fa-icon class="broadcast" [icon]="broadcasticon"></fa-icon></label>
+				<button class="msg msg-send-btn">></button>
+			</div>
+		</form>
 </div>
-
-<form (submit)="sendMsg(messageholder.value, broadcast.checked);chatform.resetForm()" #chatform="ngForm">
-	<div>
-		<input type="checkbox" id="b_checkbox" name="broadcast" #broadcast/>
-		<label for="b_checkbox">broadcast</label>
-	</div>
-	<div class="msg msg-send-text-block">
-		<input class="msg msg-bubble msg-send-text" type="text" name="message" [(ngModel)]="message" #messageholder>
-		<button class="msg msg-send-btn">></button>
-	</div>
-</form>
