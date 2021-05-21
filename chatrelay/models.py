@@ -1,36 +1,35 @@
 import json
 
 
+class MessageException(Exception):
+	pass
+
+class MessageTypeException(Exception):
+	pass
+
+class SourceException(Exception):
+	pass
+
+
 class ChatMessage:
 
-	def __init__(self, source=None, messageType=None, messageValue=None, broadcast=False):
+	def __init__(self, source: str, messageType, messageValue):
+		if source is None or source == '':
+			raise SourceException("Invalid source")
+		if messageType is None or messageType == '':
+			raise MessageTypeException("Invalid message type")
+		if messageValue is None or messageValue == '':
+			raise MessageException("empty message")
+
 		self.source = source
 		self.messageType = messageType
 		self.messageValue = messageValue
-		self.broadcast = broadcast
 
 	def __str__(self):
-		commaneeded = {'c': True}
-		return f"""
-		{'{'}
-		{injectoncondition(self.source is not None, "source", self.source, cm=True)}
-		{injectoncondition(self.messageType is not None, "messageType", self.messageType, cm=True)}
-		{injectoncondition(self.messageValue is not None, "messageValue", self.messageValue, cm=True)}
-		{injectoncondition(self.broadcast, "broadcast", self.broadcast, isstring=False)}
-		{'}'}"""
+		return str(self.__dict__)
 
 	def to_json(self):
 		return json.dumps(self.__dict__)
-
-def injectoncondition(condition, key, value, isstring=True, cm={'c': False}):
-	if condition:
-		return "\"{key}\": {isstr}{value}{isstr}{cm}".format(
-			key=key, 
-			value=value, 
-			isstr="\"" if isstring else "",
-			cm="," if cm else "")
-
-	return ""
 
 
 class ChatRoom:

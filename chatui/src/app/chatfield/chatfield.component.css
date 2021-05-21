@@ -65,3 +65,12 @@
 .chat-container {
 	width: 100%;
 }
+
+.error {
+	color: red;
+}
+
+.scroll-messages {
+    overflow-y: scroll;
+    max-height: 20em;
+}

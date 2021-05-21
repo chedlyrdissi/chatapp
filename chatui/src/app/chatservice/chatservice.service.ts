@@ -22,13 +22,7 @@ export class ChatService {
   constructor(ws: WebsocketService, roomid: string) {
     this.messages = <Subject<ChatMessage>> ws.connect(`${CHAT_URL}/${roomid}`).pipe(map(
       (response: MessageEvent): ChatMessage => {
-        let data = JSON.parse(response.data);
-        return {
-          source: data.source,
-          messageType: data.messageType,
-          messageValue: data.messageValue,
-          broadcast: data.broadcast || false
-        };
+        return JSON.parse(response.data);
       }
     ));
   }

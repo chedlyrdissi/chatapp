@@ -1,10 +1,9 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { WebsocketService } from "../chatservice/websocket.service";
 import { ChatService } from "../chatservice/chatservice.service";
 import { ChatMessage } from '../models';
-import { faBroadcastTower } from '@fortawesome/free-solid-svg-icons';
 
 
 @Component({
@@ -12,38 +11,38 @@ import { faBroadcastTower } from '@fortawesome/free-solid-svg-icons';
   templateUrl: './chatfield.component.html',
   styleUrls: ['./chatfield.component.css']
 })
-export class ChatfieldComponent {
-
-	public broadcasticon = faBroadcastTower;
+export class ChatfieldComponent implements OnInit {
 
 	private messages: ChatMessage[];
-	public message: string;
-  public source: string;
-
 	private chatService: ChatService;
 
 	@Input() roomid: string;
 
-  constructor() {
-  	this.chatService = new ChatService(new WebsocketService(), this.roomid || '')
-  	this.chatService.messages.subscribe(msg => {
-  		console.log(msg);
-      	this.messages.push(msg);
+  constructor() {}
+
+  ngOnInit(): void {
+    this.chatService = new ChatService(new WebsocketService(), this.roomid || '')
+    this.chatService.messages.subscribe(msg => {
+      this.messages.push(msg);
+      sessionStorage.setItem(`room: ${this.roomid}`, JSON.stringify(this.messages));
     });
-    
-    this.messages = [];
+    const msgs = sessionStorage.getItem(`room: ${this.roomid}`);
+    if(msgs) {
+      this.messages = JSON.parse(msgs);
+    } else {
+      this.messages = [];
+    }
   }
 
  	public getMessages(): ChatMessage[] {
  		return this.messages.slice(0);
  	}
 
- 	public sendMsg(uname:string, message: string, broadcast: boolean=false) {
+ 	public sendMsg(uname:string, message: string) {
  		this.chatService.messages.next({
 			source: uname,
       messageType: 'text',
-			messageValue: message,
-			broadcast: broadcast
+			messageValue: message
     });
  		// return false;
  	}

@@ -3,10 +3,11 @@ enum MessageType {
 }
 
 class ChatMessage {
-	source?: string;
-	messageType?: string;
+	source: string;
+	messageType: string;
 	messageValue: string;
-	broadcast?: boolean;
+	status?: number;
+	error?: string;
 }
 
 export {

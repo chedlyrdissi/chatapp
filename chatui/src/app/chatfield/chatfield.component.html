@@ -1,24 +1,22 @@
 <div class="chat-container">
 	<h1>Room id: <span class="room-id">{{roomid}}</span></h1>
-		<div class="msg msg-bubble msg-recieved" *ngFor="let message of this.getMessages()">
-			<span class="msg msg-source">{{(message.source || '')}}</span>
-
-			<fa-icon class="broadcast" [icon]="broadcasticon" *ngIf="message.broadcast"></fa-icon>
-
-			<span>></span>
-			<span [ngSwitch]="message.messageType">
-				<span *ngSwitchCase="'text'">{{message.messageValue}}</span>
-				<span *ngSwitchDefault>unknown format</span>
-			</span>
+		<div class="scroll-messages">
+			<div class="msg msg-bubble msg-recieved" *ngFor="let message of this.getMessages()">
+				<span class="msg msg-source">{{(message.source || '')}}</span>
+				<span>></span>
+				<span [ngSwitch]="message.messageType" *ngIf="message.status === 0">
+					<span *ngSwitchCase="'text'">{{message.messageValue}}</span>
+					<span *ngSwitchDefault>unknown format</span>
+				</span>
+				<span *ngIf="message.status !== 0" class="error">{{message.error}}</span>
+			</div>
 		</div>
 
-		<form (submit)="sendMsg(sourceholder.value, messageholder.value, broadcast.checked);chatform.resetForm()" #chatform="ngForm">
+		<form (submit)="sendMsg(sourceholder.value, messageholder.value);chatform.resetForm()" #chatform="ngForm">
 			<div class="msg msg-send-text-block">
-				<input class="msg msg-bubble msg-send-text uname-field form-control" type="text" name="source" [(ngModel)]="source" minlength="1" placeholder="username" #sourceholder/>
+				<input class="msg msg-bubble msg-send-text uname-field form-control" type="text" name="source" minlength="1" placeholder="username" #sourceholder required/>
 				<span class="broadcast-checkbox">></span>
-				<input class="msg msg-bubble msg-send-text form-control" type="text" name="message" [(ngModel)]="message" minlength="1" #messageholder required/>
-				<input type="checkbox" id="b_checkbox" name="broadcast" class="broadcast-checkbox" #broadcast/>
-				<label for="b_checkbox" class="broadcast-label broadcast-checkbox"><fa-icon class="broadcast" [icon]="broadcasticon"></fa-icon></label>
+				<input class="msg msg-bubble msg-send-text form-control" type="text" name="message" minlength="1" #messageholder required/>
 				<button class="msg msg-send-btn">></button>
 			</div>
 		</form>
