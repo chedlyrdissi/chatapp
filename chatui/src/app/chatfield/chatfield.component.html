@@ -21,3 +21,88 @@
 			</div>
 		</form>
 </div>
+
+
+<button (click)="toggle()">click me</button>
+<p *ngIf="!this.getDisabled()">
+	not hidden
+	<input type="text" (change)="textchange($event)"/>
+</p>
+
+<p [hidden]="this.getDisabled()">
+	not hidden 2
+	<input type="file" multiple (change)="textchange($event)"/>
+</p>
+
+
+<button (click)="dec()">prev</button>
+{{ "page " + this.page}}
+<button (click)="inc()">next</button>
+
+<!-- <div [ngSwitch]="this.page">
+	<div class="tab" *ngSwitchCase="0">Name:
+	  <p><input placeholder="First name..."></p>
+	  <p><input placeholder="Last name..."></p>
+	</div>
+
+	<div class="tab" *ngSwitchCase="2">Contact Info:
+	  <p><input placeholder="E-mail..."></p>
+	  <p><input placeholder="Phone..."></p>
+	</div>
+
+	<div class="tab" *ngSwitchCase="3">Birthday:
+	  <p><input placeholder="dd"></p>
+	  <p><input placeholder="mm"></p>
+	  <p><input placeholder="yyyy"></p>
+	</div>
+
+	<div class="tab" *ngSwitchCase="4">Login Info:
+	  <p><input placeholder="Username..."></p>
+	  <p><input placeholder="Password..."></p>
+	</div>
+
+	<div *ngSwitchCase="5">
+		<app-comp [input]="this.par"></app-comp>
+		{{ this.par }}
+	</div>
+
+	<div *ngSwitchDefault>unknown format {{ this.page }}</div>
+</div> -->
+
+
+
+<form (submit)="testsubmit($event)">
+	<div>
+		<div class="tab" [hidden]="page !== 0">Name:
+		  <p><input placeholder="First name..." required></p>
+		  <p><input placeholder="Last name..." required></p>
+		</div>
+
+		<div class="tab" [hidden]="page !== 2">Contact Info:
+		  <p><input placeholder="E-mail..."></p>
+		  <p><input placeholder="Phone..." type="tel" name="phone" pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"/></p>
+		</div>
+
+		<div class="tab" [hidden]="page !== 3">Birthday:
+		  <p><input placeholder="dd"></p>
+		  <p><input placeholder="mm"></p>
+		  <p><input placeholder="yyyy"></p>
+		</div>
+
+		<div class="tab" [hidden]="page !== 4">Login Info:
+		  <p><input placeholder="Username..."></p>
+		  <p><input placeholder="Password..."></p>
+		</div>
+
+		<div [hidden]="page !== 5">
+			<app-comp [par]="this.par"></app-comp>
+			{{ this.par }}
+		</div>
+
+		<div [hidden]="page !== 6">
+			<button>submit</button>
+		</div>
+
+		<div [hidden]="page <= 6 || page >= 0">unknown format {{ this.page }}</div>
+	</div>
+</form>

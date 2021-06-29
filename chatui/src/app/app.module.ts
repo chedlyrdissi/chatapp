@@ -7,11 +7,13 @@ import { AppComponent } from './app.component';
 import { ChatfieldComponent } from './chatfield/chatfield.component';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { CompComponent } from './comp/comp.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ChatfieldComponent
+    ChatfieldComponent,
+    CompComponent
   ],
   imports: [
     BrowserModule,
